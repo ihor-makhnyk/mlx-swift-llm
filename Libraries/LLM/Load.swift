@@ -104,7 +104,7 @@ func loadSynchronous(modelDirectory: URL) throws -> LLMModel {
 public func loadModelContainer(
     hub: HubApi = HubApi(), configuration: ModelConfiguration,
     progressHandler: @Sendable @escaping (Progress) -> Void = { _ in },
-    downloadersCallback: @escaping ([HubApi.HubFileDownloader]) -> Void = { _ in }
+    downloadersCallback: @Sendable @escaping ([HubApi.HubFileDownloader]) -> Void = { _ in }
 ) async throws -> ModelContainer {
     let modelDirectory = try await prepareModelDirectory(
         hub: hub, configuration: configuration, progressHandler: progressHandler, downloadersCallback: downloadersCallback)
