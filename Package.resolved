@@ -66,10 +66,10 @@
     {
       "identity" : "swift-transformers",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/huggingface/swift-transformers",
+      "location" : "https://github.com/ihor-makhnyk/swift-transformers",
       "state" : {
-        "revision" : "104e8ceb1bb714c4aa1619fa20bdfeb537433492",
-        "version" : "0.1.11"
+        "branch" : "main",
+        "revision" : "12e4b7240abc46f2710738fae42cd64d3ce3282a"
       }
     }
   ],
