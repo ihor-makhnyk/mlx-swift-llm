@@ -103,10 +103,11 @@ func loadSynchronous(modelDirectory: URL) throws -> LLMModel {
 /// thread safe access).
 public func loadModelContainer(
     hub: HubApi = HubApi(), configuration: ModelConfiguration,
-    progressHandler: @Sendable @escaping (Progress) -> Void = { _ in }
+    progressHandler: @Sendable @escaping (Progress) -> Void = { _ in },
+    downloadersCallback: @escaping ([HubApi.HubFileDownloader]) -> Void = { _ in }
 ) async throws -> ModelContainer {
     let modelDirectory = try await prepareModelDirectory(
-        hub: hub, configuration: configuration, progressHandler: progressHandler)
+        hub: hub, configuration: configuration, progressHandler: progressHandler, downloadersCallback: downloadersCallback)
     return try await ModelContainer(
         hub: hub, modelDirectory: modelDirectory, configuration: configuration)
 }
