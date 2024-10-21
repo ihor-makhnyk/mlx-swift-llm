@@ -13,7 +13,8 @@ struct LLMError: Error {
 
 func prepareModelDirectory(
     hub: HubApi, configuration: ModelConfiguration,
-    progressHandler: @Sendable @escaping (Progress) -> Void
+    progressHandler: @Sendable @escaping (Progress) -> Void,
+    downloadersCallback: @escaping ([HubApi.HubFileDownloader]) -> Void = { _ in }
 ) async throws -> URL {
     do {
         switch configuration.id {
@@ -22,7 +23,7 @@ func prepareModelDirectory(
             let repo = Hub.Repo(id: id)
             let modelFiles = ["*.safetensors", "config.json"]
             return try await hub.snapshot(
-                from: repo, matching: modelFiles, progressHandler: progressHandler)
+                from: repo, matching: modelFiles, progressHandler: progressHandler, downloadersCallback: downloadersCallback)
 
         case .directory(let directory):
             return directory
@@ -46,10 +47,11 @@ func prepareModelDirectory(
 /// Load and return the model and tokenizer
 public func load(
     hub: HubApi = HubApi(), configuration: ModelConfiguration,
-    progressHandler: @Sendable @escaping (Progress) -> Void = { _ in }
+    progressHandler: @Sendable @escaping (Progress) -> Void = { _ in },
+    downloadersCallback: @escaping ([HubApi.HubFileDownloader]) -> Void = { _ in }
 ) async throws -> (LLMModel, Tokenizer) {
     let modelDirectory = try await prepareModelDirectory(
-        hub: hub, configuration: configuration, progressHandler: progressHandler)
+        hub: hub, configuration: configuration, progressHandler: progressHandler, downloadersCallback: downloadersCallback)
     let model = try loadSynchronous(modelDirectory: modelDirectory)
     let tokenizer = try await loadTokenizer(configuration: configuration, hub: hub)
 
