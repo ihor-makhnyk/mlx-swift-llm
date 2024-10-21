@@ -12,7 +12,7 @@ let package = Package(
             targets: ["MLXLLM"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ml-explore/mlx-swift", from: "0.16.1"),
+        .package(url: "https://github.com/ml-explore/mlx-swift", from: "0.18.0"),
         .package(url: "https://github.com/ihor-makhnyk/swift-transformers", branch: "main"),
         .package(url: "https://github.com/1024jp/GzipSwift", "6.0.1" ... "6.0.1"),
         .package(url: "https://github.com/apple/swift-async-algorithms", from: "1.0.0"),
